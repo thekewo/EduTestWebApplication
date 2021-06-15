@@ -17,7 +17,7 @@ namespace EduTestWebApplication.Models
         [Range(1,8)]
         public int YearGroup { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public long? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public Guid CreatedBy { get; set; }

@@ -12,11 +12,16 @@ namespace EduTestWebApplication.ViewModels
         public Guid Id { get; set; }
         [Required]
         [MaxLength(50)]
+        [Display(Prompt = "Enter name of the student", Description = "Name of the student")]
         public string Name { get; set; }
         [Required]
         [Range(1, 8)]
         public int YearGroup { get; set; }
+        [Display(Name = "Date of birth")]
         public DateTime? DateOfBirth { get; set; }
-        public long? PhoneNumber { get; set; }
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber)]
+        [Phone]
+        public string PhoneNumber { get; set; }
     }
 }
