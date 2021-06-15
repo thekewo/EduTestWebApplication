@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using EduTestWebApplication.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,8 @@ namespace EduTestWebApplication.Data
             : base(options)
         {
         }
+
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Grade> Grades { get; set; }
     }
 }
