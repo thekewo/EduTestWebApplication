@@ -4,25 +4,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduTestWebApplication.Models
+namespace EduTestWebApplication.ViewModels
 {
-    public class Student
+    public class StudentViewModel
     {
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string Name { get; set; }
         [Required]
-        [Range(1,8)]
+        [Range(1, 8)]
         public int YearGroup { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public long? PhoneNumber { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime ModifiedAt { get; set; }
-        public Guid CreatedBy { get; set; }
-        public Guid ModifiedBy { get; set; }
-
-        public List<Grade> Grades { get; } = new List<Grade>();
     }
 }
