@@ -34,6 +34,7 @@ namespace EduTestWebApplication.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
+            _context.Database.Migrate();
             var students = await _context.Students.OrderBy(s => s.Name).ToListAsync();
             return View(_mapper.Map<List<StudentViewModel>>(students));
         }

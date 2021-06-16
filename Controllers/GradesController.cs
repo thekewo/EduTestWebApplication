@@ -22,7 +22,7 @@ namespace EduTestWebApplication.Controllers
         // GET: Grades
         public async Task<IActionResult> Index()
         {
-            return View(await _context.GradeViewModel.ToListAsync());
+            return View(await _context.Grades.ToListAsync());
         }
 
         // GET: Grades/Details/5
@@ -33,7 +33,7 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var gradeViewModel = await _context.GradeViewModel
+            var gradeViewModel = await _context.Grades
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (gradeViewModel == null)
             {
@@ -74,7 +74,7 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var gradeViewModel = await _context.GradeViewModel.FindAsync(id);
+            var gradeViewModel = await _context.Grades.FindAsync(id);
             if (gradeViewModel == null)
             {
                 return NotFound();
@@ -125,7 +125,7 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var gradeViewModel = await _context.GradeViewModel
+            var gradeViewModel = await _context.Grades
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (gradeViewModel == null)
             {
@@ -140,15 +140,15 @@ namespace EduTestWebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var gradeViewModel = await _context.GradeViewModel.FindAsync(id);
-            _context.GradeViewModel.Remove(gradeViewModel);
+            var gradeViewModel = await _context.Grades.FindAsync(id);
+            _context.Grades.Remove(gradeViewModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GradeViewModelExists(Guid id)
         {
-            return _context.GradeViewModel.Any(e => e.Id == id);
+            return _context.Grades.Any(e => e.Id == id);
         }
     }
 }
