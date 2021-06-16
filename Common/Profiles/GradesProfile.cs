@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduTestWebApplication.Profiles
+namespace EduTestWebApplication.Common.Profiles
 {
-    public class StudentsProfile : Profile
+    public class GradesProfile : Profile
     {
-        public StudentsProfile()
+        public GradesProfile()
         {
-            CreateMap<Student, StudentViewModel>();
-            CreateMap<StudentViewModel, Student>();
+            CreateMap<Grade, GradeViewModel>();
+            CreateMap<GradeViewModel, Student>();
         }
     }
 }
