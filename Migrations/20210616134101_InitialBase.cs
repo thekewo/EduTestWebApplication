@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EduTestWebApplication.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

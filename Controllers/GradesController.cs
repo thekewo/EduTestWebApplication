@@ -17,15 +17,18 @@ namespace EduTestWebApplication.Controllers
     public class GradesController : Controller
     {
         private readonly IGradeService _gradeService;
+        private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser> _userManager;
 
         public GradesController(
             IGradeService gradeService,
+            IStudentService studentService,
             IMapper mapper,
             UserManager<IdentityUser> userManager)
         {
             _gradeService = gradeService;
+            _studentService = studentService;
             _mapper = mapper;
             _userManager = userManager;
         }
@@ -55,10 +58,10 @@ namespace EduTestWebApplication.Controllers
             return View(_mapper.Map<GradeViewModel>(grade));
         }
 
-        // GET: Grades/Create
-        public IActionResult Create()
+        // GET: Grades/Create/{Id}
+        public IActionResult Create(Guid Id)
         {
-            return View();
+            return View(new GradeViewModel() { StudentId = Id });
         }
 
         // POST: Grades/Create

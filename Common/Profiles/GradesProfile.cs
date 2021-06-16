@@ -13,7 +13,7 @@ namespace EduTestWebApplication.Common.Profiles
         public GradesProfile()
         {
             CreateMap<Grade, GradeViewModel>();
-            CreateMap<GradeViewModel, Student>();
+            CreateMap<GradeViewModel, Grade>();
         }
     }
 }
