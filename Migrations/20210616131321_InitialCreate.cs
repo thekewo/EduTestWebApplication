@@ -55,9 +55,9 @@ namespace EduTestWebApplication.Migrations
                     YearGroup = table.Column<int>(type: "INTEGER", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: true),
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "TEXT", nullable: false),
                     ModifiedBy = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -179,9 +179,9 @@ namespace EduTestWebApplication.Migrations
                     StudentId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Value = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ModifiedBy = table.Column<Guid>(type: "TEXT", nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
