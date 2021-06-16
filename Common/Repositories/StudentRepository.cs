@@ -33,7 +33,7 @@ namespace EduTestWebApplication.Common.Repositories
 
         public async Task<List<Student>> GetStudentsAsync()
         {
-            return await _context.Students.ToListAsync();
+            return await _context.Students.Include(s => s.Grades).ToListAsync();
         }
 
         public void MigrateDatabase()

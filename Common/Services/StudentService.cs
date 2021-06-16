@@ -34,6 +34,11 @@ namespace EduTestWebApplication.Common.Services
             return await _studentRepository.GetStudentByIdAsync(id);
         }
 
+        public async Task<List<Student>> GetStudentsAsync()
+        {
+            return await _studentRepository.GetStudentsAsync();
+        }
+
         public async Task<List<Student>> GetStudentsOrderByNameAsync()
         {
             var students = await _studentRepository.GetStudentsAsync();

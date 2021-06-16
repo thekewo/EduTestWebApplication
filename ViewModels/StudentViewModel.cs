@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EduTestWebApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,8 +24,5 @@ namespace EduTestWebApplication.ViewModels
         [DataType(DataType.PhoneNumber)]
         [Phone]
         public string PhoneNumber { get; set; }
-        public float Avarage { get; set; }
-        public int NumberOfFailGrades { get; set; }
-        public int BestGrade { get; set; }
     }
 }

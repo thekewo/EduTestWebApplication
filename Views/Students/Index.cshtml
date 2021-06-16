@@ -4,94 +4,52 @@
     ViewData["Title"] = "Students";
 }
 
-<div>
-    <h1>Student statistics</h1>
-    <table class="table table-margin">
-        <thead>
+<h1>Students</h1>
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Statistics">Statistics</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Avarage)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberOfFailGrades)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BestGrade)
-                </th>
-                <th></th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.YearGroup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                    <a class="btn btn-info" asp-controller="Grades" asp-action="Create" asp-route-id="@item.Id">Add Grade</a> 
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Avarage)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOfFailGrades)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BestGrade)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<div>
-    <h1>Students</h1>
-    <p>
-        <a class="btn btn-primary" asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.YearGroup)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateOfBirth)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.YearGroup)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateOfBirth)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a class="btn btn-info" asp-controller="Grades" asp-action="Create" asp-route-id="@item.Id">Add Grade</a> |
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>

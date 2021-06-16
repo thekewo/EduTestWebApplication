@@ -37,7 +37,30 @@ namespace EduTestWebApplication.Controllers
         {
             _studentService.MigrateDatabase();
             var students = await _studentService.GetStudentsOrderByNameAsync();
-            return View(_mapper.Map<List<StudentViewModel>>(students));
+            var studentViewModels = _mapper.Map<List<StudentViewModel>>(students);
+
+            return View(studentViewModels);
+        }
+
+        // GET: Statistics
+        public async Task<IActionResult> Statistics()
+        {
+            var students = await _studentService.GetStudentsOrderByNameAsync();
+            students = students.Where(s => s.Grades.Count() > 0).ToList();
+
+            var studentStatisticsViewModel = new List<StudentStatisticsViewModel>();
+
+            foreach (var student in students)
+            {
+                studentStatisticsViewModel.Add(new StudentStatisticsViewModel() { 
+                    StudentName = student.Name,
+                    Avarage = student.Grades.Select(g => g.Value).Average(),
+                    NumberOfFailGrades = student.Grades.Where(g => g.Value == 1).Count(),
+                    BestGrade = student.Grades.Select(g => g.Value).Max()
+                });
+            }
+
+            return View(studentStatisticsViewModel.OrderBy(svm => svm.Avarage));
         }
 
         // GET: Students/Details/5

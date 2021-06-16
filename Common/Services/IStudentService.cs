@@ -8,6 +8,7 @@ namespace EduTestWebApplication.Common.Services
 {
     public interface IStudentService
     {
+        Task<List<Student>> GetStudentsAsync();
         Task<List<Student>> GetStudentsOrderByNameAsync();
         Task<Student> GetStudentByIdAsync(Guid? id);
         bool StudentExists(Guid id);
