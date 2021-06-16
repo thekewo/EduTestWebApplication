@@ -119,10 +119,7 @@ namespace EduTestWebApplication.Controllers
 
                     var user = await _userManager.GetUserAsync(User);
 
-                    student.ModifiedAt = DateTime.Now;
-                    student.ModifiedBy = Guid.Parse(user.Id);
-
-                    _studentService.UpdateStudent(student);
+                    _studentService.UpdateStudent(student, Guid.Parse(user.Id));
                     await _studentService.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

@@ -12,7 +12,7 @@ namespace EduTestWebApplication.Common.Services
         Task<Student> GetStudentByIdAsync(Guid? id);
         bool StudentExists(Guid id);
         void AddStudent(Student student, Guid userId);
-        void UpdateStudent(Student student);
+        void UpdateStudent(Student student, Guid userId);
         void DeleteStudent(Student student);
         Task<int> SaveChangesAsync();
         void MigrateDatabase();

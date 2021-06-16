@@ -55,8 +55,10 @@ namespace EduTestWebApplication.Common.Services
             return _studentRepository.StudentExists(id);
         }
 
-        public void UpdateStudent(Student student)
+        public void UpdateStudent(Student student, Guid userId)
         {
+            student.ModifiedAt = DateTime.Now;
+            student.ModifiedBy = userId;
             _studentRepository.UpdateStudent(student);
         }
     }

@@ -7,22 +7,35 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EduTestWebApplication.Data;
 using EduTestWebApplication.ViewModels;
+using EduTestWebApplication.Common.Services;
+using AutoMapper;
+using EduTestWebApplication.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace EduTestWebApplication.Controllers
 {
     public class GradesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IGradeService _gradeService;
+        private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public GradesController(ApplicationDbContext context)
+        public GradesController(
+            IGradeService gradeService,
+            IMapper mapper,
+            UserManager<IdentityUser> userManager)
         {
-            _context = context;
+            _gradeService = gradeService;
+            _mapper = mapper;
+            _userManager = userManager;
         }
 
         // GET: Grades
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Grades.ToListAsync());
+            _gradeService.MigrateDatabase();
+            var grades = await _gradeService.GetGradesAsync();
+            return View(_mapper.Map<List<GradeViewModel>>(grades));
         }
 
         // GET: Grades/Details/5
@@ -33,14 +46,13 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var gradeViewModel = await _context.Grades
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (gradeViewModel == null)
+            var grade = await _gradeService.GetGradeByIdAsync(id);
+            if (grade == null)
             {
                 return NotFound();
             }
 
-            return View(gradeViewModel);
+            return View(_mapper.Map<GradeViewModel>(grade));
         }
 
         // GET: Grades/Create
@@ -58,9 +70,12 @@ namespace EduTestWebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                gradeViewModel.Id = Guid.NewGuid();
-                _context.Add(gradeViewModel);
-                await _context.SaveChangesAsync();
+                var grade = _mapper.Map<Grade>(gradeViewModel);
+
+                var user = await _userManager.GetUserAsync(User);
+
+                _gradeService.AddGrade(grade, Guid.Parse(user.Id));
+                await _gradeService.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(gradeViewModel);
@@ -74,12 +89,12 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var gradeViewModel = await _context.Grades.FindAsync(id);
-            if (gradeViewModel == null)
+            var grade = await _gradeService.GetGradeByIdAsync(id);
+            if (grade == null)
             {
                 return NotFound();
             }
-            return View(gradeViewModel);
+            return View(_mapper.Map<GradeViewModel>(grade));
         }
 
         // POST: Grades/Edit/5
@@ -98,8 +113,12 @@ namespace EduTestWebApplication.Controllers
             {
                 try
                 {
-                    _context.Update(gradeViewModel);
-                    await _context.SaveChangesAsync();
+                    var grade = _mapper.Map<Grade>(gradeViewModel);
+
+                    var user = await _userManager.GetUserAsync(User);
+
+                    _gradeService.UpdateGrade(grade, Guid.Parse(user.Id));
+                    await _gradeService.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -125,14 +144,13 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var gradeViewModel = await _context.Grades
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (gradeViewModel == null)
+            var grade = await _gradeService.GetGradeByIdAsync(id);
+            if (grade == null)
             {
                 return NotFound();
             }
 
-            return View(gradeViewModel);
+            return View(_mapper.Map<GradeViewModel>(grade));
         }
 
         // POST: Grades/Delete/5
@@ -140,15 +158,15 @@ namespace EduTestWebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var gradeViewModel = await _context.Grades.FindAsync(id);
-            _context.Grades.Remove(gradeViewModel);
-            await _context.SaveChangesAsync();
+            var gradeViewModel = await _gradeService.GetGradeByIdAsync(id);
+            _gradeService.DeleteGrade(gradeViewModel);
+            await _gradeService.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GradeViewModelExists(Guid id)
         {
-            return _context.Grades.Any(e => e.Id == id);
+            return _gradeService.GradeExists(id);
         }
     }
 }
