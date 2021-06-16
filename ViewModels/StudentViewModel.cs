@@ -23,5 +23,8 @@ namespace EduTestWebApplication.ViewModels
         [DataType(DataType.PhoneNumber)]
         [Phone]
         public string PhoneNumber { get; set; }
+        public float Avarage { get; set; }
+        public int NumberOfFailGrades { get; set; }
+        public int BestGrade { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace EduTestWebApplication.Models
         [Required]
         public Guid StudentId { get; set; }
         [Required]
+        [Range(1,5)]
         public int Value { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
