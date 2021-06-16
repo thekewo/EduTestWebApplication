@@ -1,3 +1,5 @@
+using EduTestWebApplication.Common.Repositories;
+using EduTestWebApplication.Common.Services;
 using EduTestWebApplication.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +34,7 @@ namespace EduTestWebApplication
             connection.Open();
 
             services.AddControllersWithViews();
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlite(connection);
@@ -43,6 +46,12 @@ namespace EduTestWebApplication
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IGradeRepository, GradeRepository>();
+
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IGradeService, GradeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

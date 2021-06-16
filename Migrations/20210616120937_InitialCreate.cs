@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EduTestWebApplication.Data.Migrations
+namespace EduTestWebApplication.Migrations
 {
-    public partial class CreateBaseSchema : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,11 +54,11 @@ namespace EduTestWebApplication.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     YearGroup = table.Column<int>(type: "INTEGER", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<long>(type: "INTEGER", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ModifiedBy = table.Column<Guid>(type: "TEXT", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "TEXT", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

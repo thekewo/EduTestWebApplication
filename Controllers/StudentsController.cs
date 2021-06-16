@@ -11,22 +11,23 @@ using EduTestWebApplication.ViewModels;
 using AutoMapper;
 using EduTestWebApplication.Models;
 using Microsoft.AspNetCore.Authorization;
+using EduTestWebApplication.Common.Services;
 
 namespace EduTestWebApplication.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser> _userManager;
 
         public StudentsController(
-            ApplicationDbContext context,
+            IStudentService studentService,
             IMapper mapper,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager)
         {
-            _context = context;
+            _studentService = studentService;
             _mapper = mapper;
             _userManager = userManager;
         }
@@ -34,8 +35,8 @@ namespace EduTestWebApplication.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            _context.Database.Migrate();
-            var students = await _context.Students.OrderBy(s => s.Name).ToListAsync();
+            _studentService.MigrateDatabase();
+            var students = await _studentService.GetStudentsOrderByNameAsync();
             return View(_mapper.Map<List<StudentViewModel>>(students));
         }
 
@@ -47,8 +48,7 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _studentService.GetStudentByIdAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -76,12 +76,8 @@ namespace EduTestWebApplication.Controllers
 
                 var user = await _userManager.GetUserAsync(User);
 
-                student.Id = Guid.NewGuid();
-                student.CreatedAt = DateTime.Now;
-                student.CreatedBy = Guid.Parse(user.Id);
-
-                _context.Add(student);
-                await _context.SaveChangesAsync();
+                _studentService.AddStudent(student, Guid.Parse(user.Id));
+                await _studentService.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(studentViewModel);
@@ -95,7 +91,7 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
+            var student = await _studentService.GetStudentByIdAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -126,8 +122,8 @@ namespace EduTestWebApplication.Controllers
                     student.ModifiedAt = DateTime.Now;
                     student.ModifiedBy = Guid.Parse(user.Id);
 
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
+                    _studentService.UpdateStudent(student);
+                    await _studentService.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -153,8 +149,7 @@ namespace EduTestWebApplication.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _studentService.GetStudentByIdAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -168,15 +163,15 @@ namespace EduTestWebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
-            await _context.SaveChangesAsync();
+            var student = await _studentService.GetStudentByIdAsync(id);
+            _studentService.DeleteStudent(student);
+            await _studentService.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StudentViewModelExists(Guid id)
         {
-            return _context.Students.Any(e => e.Id == id);
+            return _studentService.StudentExists(id);
         }
     }
 }
