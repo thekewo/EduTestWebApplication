@@ -11,6 +11,7 @@ using EduTestWebApplication.Common.Services;
 using AutoMapper;
 using EduTestWebApplication.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EduTestWebApplication.Controllers
 {
@@ -60,6 +61,7 @@ namespace EduTestWebApplication.Controllers
         }
 
         // GET: Grades/Create/{Id}
+        [Authorize]
         public IActionResult Create(Guid Id)
         {
             return View(new GradeViewModel() { StudentId = Id });
@@ -69,6 +71,7 @@ namespace EduTestWebApplication.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,StudentId,Value")] GradeViewModel gradeViewModel)
         {
