@@ -36,6 +36,7 @@ namespace EduTestWebApplication.Controllers
         // GET: Grades
         public async Task<IActionResult> Index()
         {
+            //Migrate needed because of the inmermory database.
             _gradeService.MigrateDatabase();
             var grades = await _gradeService.GetGradesAsync();
             return View(_mapper.Map<List<GradeViewModel>>(grades));
@@ -79,7 +80,7 @@ namespace EduTestWebApplication.Controllers
 
                 _gradeService.AddGrade(grade, Guid.Parse(user.Id));
                 await _gradeService.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect("Students/Index");
             }
             return View(gradeViewModel);
         }

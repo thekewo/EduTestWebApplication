@@ -35,6 +35,7 @@ namespace EduTestWebApplication.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
+            //Migrate needed because of the inmermory database.
             _studentService.MigrateDatabase();
             var students = await _studentService.GetStudentsOrderByNameAsync();
             var studentViewModels = _mapper.Map<List<StudentViewModel>>(students);
