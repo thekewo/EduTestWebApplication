@@ -73,3 +73,7 @@ body {
 .table-margin {
     margin: 60px;
 }
+
+.input-box-width-30 {
+    width: 30%;
+}
