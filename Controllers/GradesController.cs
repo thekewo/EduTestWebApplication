@@ -80,7 +80,7 @@ namespace EduTestWebApplication.Controllers
 
                 _gradeService.AddGrade(grade, Guid.Parse(user.Id));
                 await _gradeService.SaveChangesAsync();
-                return Redirect("Students/Index");
+                return RedirectToAction("Index", "Students");
             }
             return View(gradeViewModel);
         }

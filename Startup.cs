@@ -48,8 +48,9 @@ namespace EduTestWebApplication
                 options.SignIn.RequireConfirmedEmail = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
