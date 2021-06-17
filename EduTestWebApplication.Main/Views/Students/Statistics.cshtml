@@ -1,0 +1,45 @@
+﻿@model IEnumerable<EduTestWebApplication.ViewModels.StudentStatisticsViewModel>
+
+@{
+    ViewData["Title"] = "Students statistics";
+}
+
+<h1>Student statistics</h1>
+<table class="table table-margin">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Avarage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfFailGrades)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BestGrade)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Avarage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfFailGrades)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BestGrade)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
